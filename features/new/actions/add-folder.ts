@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { findFolder } from "@/lib/data";
+import { findFolder, FolderNode } from "@/lib/data";
 
 export async function addFolder(parentFolderId: string, name: string) {
   if (typeof name !== "string" || !name.trim()) {
@@ -13,10 +13,11 @@ export async function addFolder(parentFolderId: string, name: string) {
     throw new Error("Parent folder not found");
   }
 
-  const newFolder = {
+  const newFolder: FolderNode = {
     id: Date.now().toString(),
     name: name.trim(),
     type: "folder" as const,
+    parentId: parentFolderId,
     children: [],
   };
 

@@ -9,7 +9,7 @@ export type FolderNode = {
   name: string;
   type: "folder";
   children: Array<FolderNode | FileNode>;
-  parent?: FolderNode;
+  parentId?: string;
 };
 
 declare global {
@@ -21,16 +21,30 @@ const initialData: FolderNode = {
   name: "root",
   type: "folder",
   children: [
-    { id: "folder-1", name: "Folder 1", type: "folder", children: [] },
-    { id: "folder-2", name: "Folder 2", type: "folder", children: [] },
+    { id: "folder-1", name: "Folder 1", type: "folder", children: [], parentId: "root" },
+    { id: "folder-2", name: "Folder 2", type: "folder", children: [], parentId: "root" },
   ],
 };
 
-if (!global.__DATA_STORE__) {
-  global.__DATA_STORE__ = initialData;
+// Initialize the global store
+if (typeof global !== 'undefined' && !global.__DATA_STORE__) {
+  global.__DATA_STORE__ = structuredClone(initialData);
 }
 
-export const root = global.__DATA_STORE__;
+// Function to get the current data store
+export function getDataStore(): FolderNode {
+  if (typeof global !== 'undefined' && global.__DATA_STORE__) {
+    return global.__DATA_STORE__;
+  }
+  // Fallback for cases where global is not available
+  if (typeof global !== 'undefined') {
+    global.__DATA_STORE__ = structuredClone(initialData);
+    return global.__DATA_STORE__;
+  }
+  return structuredClone(initialData);
+}
+
+export const root = getDataStore();
 
 export function findFolder(
   id: string,

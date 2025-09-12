@@ -8,12 +8,13 @@ export const runtime = 'nodejs';
 
 export async function POST(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const resolvedParams = await params;
   const formData = await req.formData();
   const file = formData.get('file') as File | null;
   const providedName = formData.get('name')?.toString();
-  const parent = findFolder(params.id);
+  const parent = findFolder(resolvedParams.id);
   if (!parent || !file) {
     return NextResponse.json({ error: 'Invalid request: missing parent or file' }, { status: 400 });
   }
@@ -47,6 +48,6 @@ export async function POST(
     type: 'file',
   });
   revalidatePath('/');
-  revalidatePath(`/folder/${params.id}`);
+  revalidatePath(`/folder/${resolvedParams.id}`);
   return NextResponse.json({ success: true });
 }

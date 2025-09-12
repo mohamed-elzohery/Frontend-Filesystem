@@ -3,11 +3,12 @@ import { FolderList } from "@/components/FolderList";
 import NewButton from "../../../features/new/components/NewButton";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export default function FolderPage({ params }: Props) {
-  const folder = findFolder(params.id);
+export default async function FolderPage({ params }: Props) {
+  const resolvedParams = await params;
+  const folder = findFolder(resolvedParams.id);
   // here to replace file not found page
   if (!folder) {
     return <p>Folder not found</p>;
