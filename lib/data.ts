@@ -11,7 +11,11 @@ export type FolderNode = {
   children: Array<FolderNode | FileNode>;
 };
 
-export const root: FolderNode = {
+declare global {
+  var __DATA_STORE__: FolderNode | undefined;
+}
+
+const initialData: FolderNode = {
   id: "root",
   name: "root",
   type: "folder",
@@ -20,6 +24,12 @@ export const root: FolderNode = {
     { id: "folder-2", name: "Folder 2", type: "folder", children: [] },
   ],
 };
+
+if (!global.__DATA_STORE__) {
+  global.__DATA_STORE__ = initialData;
+}
+
+export const root = global.__DATA_STORE__;
 
 export function findFolder(
   id: string,

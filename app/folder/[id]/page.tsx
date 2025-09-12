@@ -1,6 +1,6 @@
-import { findFolder } from '@/lib/data';
-import { CreateFolderButton } from '@/components/CreateFolderButton';
-import { FolderList } from '@/components/FolderList';
+import { findFolder } from "@/lib/data";
+import { FolderList } from "@/components/FolderList";
+import NewButton from "../../features/new/components/NewButton";
 
 interface Props {
   params: { id: string };
@@ -8,6 +8,7 @@ interface Props {
 
 export default function FolderPage({ params }: Props) {
   const folder = findFolder(params.id);
+  // here to replace file not found page
   if (!folder) {
     return <p>Folder not found</p>;
   }
@@ -15,7 +16,7 @@ export default function FolderPage({ params }: Props) {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h1 className="text-xl font-bold">{folder.name}</h1>
-        <CreateFolderButton />
+        <NewButton />
       </div>
       {/* TODO: allow creating files */}
       <FolderList nodes={folder.children} />

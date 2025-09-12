@@ -1,24 +1,33 @@
-import { Folder, Plus } from "lucide-react";
-
+import { Plus } from "lucide-react";
 import React from "react";
-import AddFolderButton from "./AddFolderButton";
-import AddFileButton from "./AddFileButton";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import AddFolderButton from "./new-folder/AddFolderButton";
+import AddFileButton from "./new-file/AddFileButton";
+import { Button } from "@/components/ui/button";
 
 const NewButton = () => {
   return (
-    <details className="dropdown dropdown-bottom dropdown-end">
-      <summary className="btn m-1 flex gap-3">
-        <Plus /> New
-      </summary>
-      <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-        <li>
+    <DropdownMenu modal={false}>
+      <DropdownMenuTrigger asChild>
+        <Button className="flex gap-2 items-center group">
+          <Plus className="transition-transform transition-duration-300 group-hover:rotate-90" />
+          New
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-52">
+        <DropdownMenuItem asChild>
           <AddFolderButton />
-        </li>
-        <li>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
           <AddFileButton />
-        </li>
-      </ul>
-    </details>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 };
 

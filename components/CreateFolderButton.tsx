@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { addFolder } from '@/lib/actions/add-folder';
 
 export function CreateFolderButton() {
   const [open, setOpen] = useState(false);
@@ -23,12 +24,12 @@ export function CreateFolderButton() {
             e.preventDefault();
             const trimmed = name.trim();
             if (trimmed) {
-              await fetch(`/api/folders/root`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: trimmed }),
-              });
-              router.refresh();
+              try {
+                await addFolder('root', trimmed);
+                router.refresh();
+              } catch (error) {
+                console.error('Error creating folder:', error);
+              }
             }
             setOpen(false);
             setName('');

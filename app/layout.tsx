@@ -1,9 +1,10 @@
-import type { ReactNode } from 'react';
-import Link from 'next/link';
-import './globals.css';
+import type { ReactNode } from "react";
+import Link from "next/link";
+import "./globals.css";
+import { Toaster } from "sonner";
 
 export const metadata = {
-  title: 'File Explorer',
+  title: "File Explorer",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </Link>
         </aside>
         <main className="flex-1 p-4">{children}</main>
+        <Toaster />
       </body>
     </html>
   );
