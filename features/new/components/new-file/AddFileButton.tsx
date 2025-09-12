@@ -52,6 +52,7 @@ const AddFileButton = () => {
         type="file"
         onChange={handleFileChange}
         className="hidden"
+        style={{ display: "none" }}
         id="file-upload"
       />
     </>

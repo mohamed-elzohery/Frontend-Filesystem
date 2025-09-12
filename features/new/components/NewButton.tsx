@@ -15,7 +15,7 @@ const NewButton = () => {
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button className="flex gap-2 items-center group">
-          <Plus className="transition-transform transition-duration-300 group-hover:rotate-90" />
+          <Plus className="transition-transform duration-300 group-hover:rotate-90" />
           New
         </Button>
       </DropdownMenuTrigger>

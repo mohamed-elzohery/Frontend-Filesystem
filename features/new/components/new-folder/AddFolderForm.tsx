@@ -4,8 +4,7 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { DialogFooter } from "@/components/ui/dialog";
-import { DialogClose } from "@radix-ui/react-dialog";
+import { DialogClose, DialogFooter } from "@/components/ui/dialog";
 import { toast } from "sonner";
 import { addFolder } from "@/features/new/actions/add-folder";
 
