@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </Link>
         </aside>
         <main className="flex-1 p-4">{children}</main>
-        <Toaster />
+        <Toaster visibleToasts={1} />
       </body>
     </html>
   );
