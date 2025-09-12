@@ -9,6 +9,7 @@ export type FolderNode = {
   name: string;
   type: "folder";
   children: Array<FolderNode | FileNode>;
+  parent?: FolderNode;
 };
 
 declare global {

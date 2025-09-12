@@ -1,17 +1,14 @@
 import { findFolder } from "@/lib/data";
-import { CreateFolderButton } from "@/components/CreateFolderButton";
 import { FolderList } from "@/components/FolderList";
-import NewButton from "./features/new/components/NewButton";
+import NewButton from "../features/new/components/NewButton";
+import { notFound } from "next/navigation";
 
 export default function Home() {
   const folder = findFolder("root");
+  if (!folder) notFound();
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-bold">{folder?.name}</h1>
-        <NewButton />
-      </div>
-      {folder && <FolderList nodes={folder.children} />}
+      <FolderList nodes={folder.children} />
     </div>
   );
 }

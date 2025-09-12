@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { DialogFooter } from "@/components/ui/dialog";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { toast } from "sonner";
-import { addFolder } from "@/lib/actions/add-folder";
+import { addFolder } from "@/features/new/actions/add-folder";
 
 interface AddFolderFormProps {
   onSuccess?: () => void;

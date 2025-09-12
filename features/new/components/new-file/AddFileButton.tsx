@@ -4,9 +4,8 @@ import { File } from "lucide-react";
 import React, { useRef } from "react";
 import { useParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { addFile } from "@/lib/actions/add-file";
+import { addFile } from "../../actions/add-file";
 
 const AddFileButton = () => {
   const params = useParams();
