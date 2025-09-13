@@ -1,11 +1,4 @@
 import React from "react";
-import type { FileNode } from "@/lib/data";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import ImageViewer from "./ImageViewer";
 import PDFViewer from "./PDFViewer";
 import AudioViewer from "./AudioViewer";
@@ -17,28 +10,26 @@ interface ViewerProps {
   file: FileNode | null;
 }
 
+// Configuration object for file type viewers
+const FILE_VIEWERS = {
+  image: ImageViewer,
+  pdf: PDFViewer,
+  audio: AudioViewer,
+  video: VideoViewer,
+} as const;
+
+type FileType = keyof typeof FILE_VIEWERS;
+
 const Viewer = ({ file }: ViewerProps) => {
   if (!file) return null;
 
-  const renderFileViewer = () => {
-    // Check file type both from stored fileType and from filename
-    const fileType = file.fileType || getFileTypeFromName(file.name);
+  // Check file type both from stored fileType and from filename
+  const fileType = file.fileType || getFileTypeFromName(file.name);
 
-    switch (fileType) {
-      case "image":
-        return <ImageViewer file={file} />;
-      case "pdf":
-        return <PDFViewer file={file} />;
-      case "audio":
-        return <AudioViewer file={file} />;
-      case "video":
-        return <VideoViewer file={file} />;
-      default:
-        return <PreviewFallback file={file} />;
-    }
-  };
+  // Get the appropriate viewer component or fallback
+  const ViewerComponent = FILE_VIEWERS[fileType as FileType] || PreviewFallback;
 
-  return renderFileViewer();
+  return <ViewerComponent file={file} />;
 };
 
 export default Viewer;

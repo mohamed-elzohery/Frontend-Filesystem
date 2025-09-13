@@ -12,7 +12,7 @@ const PreviewFallback = ({ file }: PreviewFallbackProps) => {
   const fileURL = `/${file.id}-${file.name}`;
 
   return (
-    <div className="text-center py-8 flex flex-col items-center">
+    <div className="text-center py-8 flex flex-col items-center p-3">
       <p className="text-muted-foreground">
         Preview not available for this file type.
       </p>
@@ -20,7 +20,7 @@ const PreviewFallback = ({ file }: PreviewFallbackProps) => {
       <a
         href={fileURL}
         download
-        className="flex items-center justify-center mt-4 px-4 py-2 border rounded bg-white hover:bg-gray-50 w-2xl"
+        className="flex items-center justify-center mt-4 px-4 py-2 border rounded bg-white hover:bg-gray-50 "
       >
         <Download className="w-4 h-4 mr-2 " />
         Download File

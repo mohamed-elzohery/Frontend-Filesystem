@@ -6,7 +6,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogOverlay,
+  DialogPortal,
 } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@/components/ui/visually-hidden";
 import {
   Image,
   FileText,
@@ -14,10 +17,13 @@ import {
   Music,
   File,
   ExternalLink,
+  X,
 } from "lucide-react";
 import ImageViewer from "./viewers/ImageViewer";
 import Viewer from "./viewers/Viewer";
 import { getFileTypeFromName } from "@/lib/data";
+import * as DialogPrimitive from "@radix-ui/react-dialog";
+import { cn } from "@/lib/utils";
 
 interface FileItemProps {
   file: FileNode;
@@ -61,15 +67,49 @@ const FileItem = ({ file }: FileItemProps) => {
           </div>
         </li>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[80vh] overflow-auto">
-        <DialogHeader>
-          <DialogTitle className="flex items-center space-x-2">
-            {getFileIcon(file.fileType, file.name)}
-            <span>File Preview</span>
-          </DialogTitle>
-        </DialogHeader>
-        <Viewer file={file} />
-      </DialogContent>
+      <DialogPortal>
+        {/* Custom transparent overlay with backdrop blur */}
+        <DialogPrimitive.Overlay
+          className={cn(
+            "fixed inset-0 z-50 bg-black/20 backdrop-blur-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+          )}
+        />
+        {/* Custom dialog content for file preview */}
+        <DialogPrimitive.Content
+          className={cn(
+            "fixed left-[50%] top-[50%] z-50 grid w-[95vw] h-[95vh] max-w-none translate-x-[-50%] translate-y-[-50%] gap-0 border-0 bg-white/95 backdrop-blur-sm shadow-2xl duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg overflow-hidden"
+          )}
+        >
+          {/* Accessible title - visually hidden */}
+          <VisuallyHidden>
+            <DialogPrimitive.Title>
+              {file.name} - File Preview
+            </DialogPrimitive.Title>
+          </VisuallyHidden>
+
+          {/* Header */}
+          <div className="sticky top-0 bg-white/90 backdrop-blur-sm z-10 p-4 sm:p-6 border-b border-gray-200/50">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2 text-gray-800 min-w-0 flex-1">
+                {getFileIcon(file.fileType, file.name)}
+                <span className="text-lg font-semibold leading-none tracking-tight truncate">
+                  File Preview
+                </span>
+              </div>
+              {/* Close button */}
+              <DialogPrimitive.Close className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none bg-white/80 backdrop-blur-sm p-2 hover:bg-white/90 ml-2 flex-shrink-0">
+                <X className="h-4 w-4" />
+                <span className="sr-only">Close</span>
+              </DialogPrimitive.Close>
+            </div>
+          </div>
+
+          {/* Content */}
+          <div className="flex-1 overflow-auto p-4 sm:p-6">
+            <Viewer file={file} />
+          </div>
+        </DialogPrimitive.Content>
+      </DialogPortal>
     </Dialog>
   );
 };
