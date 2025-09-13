@@ -90,10 +90,17 @@ export function getFileTypeFromName(fileName: string): string {
     case 'avi':
     case 'mov':
     case 'wmv':
+    case 'webm':
+    case 'mkv':
+    case 'flv':
       return 'video';
     case 'mp3':
     case 'wav':
     case 'flac':
+    case 'aac':
+    case 'm4a':
+    case 'ogg':
+    case 'wma':
       return 'audio';
     case 'txt':
     case 'doc':

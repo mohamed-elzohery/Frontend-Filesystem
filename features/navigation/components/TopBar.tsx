@@ -7,7 +7,6 @@ type TopBarProps = {
 };
 
 const TopBar = ({ folder }: TopBarProps) => {
-  console.log("TopBar folder:", folder);
   return (
     <nav className=" flex items-center gap-4">
       <BackButton parentId={folder?.parentId} />

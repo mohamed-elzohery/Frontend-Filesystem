@@ -11,7 +11,6 @@ type BackButtonProps = {
 };
 
 const BackButton = ({ parentId }: BackButtonProps) => {
-  console.log("parentId:", parentId);
   if (!parentId) return null;
   return (
     <Link

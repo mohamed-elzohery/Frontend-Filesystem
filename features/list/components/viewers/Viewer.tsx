@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/dialog";
 import ImageViewer from "./ImageViewer";
 import PDFViewer from "./PDFViewer";
+import AudioViewer from "./AudioViewer";
+import VideoViewer from "./VideoViewer";
 import PreviewFallback from "./PreviewFallback";
 import { getFileTypeFromName } from "@/lib/data";
 
@@ -27,6 +29,10 @@ const Viewer = ({ file }: ViewerProps) => {
         return <ImageViewer file={file} />;
       case "pdf":
         return <PDFViewer file={file} />;
+      case "audio":
+        return <AudioViewer file={file} />;
+      case "video":
+        return <VideoViewer file={file} />;
       default:
         return <PreviewFallback file={file} />;
     }

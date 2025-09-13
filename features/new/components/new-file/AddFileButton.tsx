@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { addFile } from "../../actions/add-file";
 import { Button } from "@/components/ui/button";
+import { validateFileSize } from "../../utils/validators";
 
 const AddFileButton = () => {
   const params = useParams();
@@ -17,14 +18,9 @@ const AddFileButton = () => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const maxSizeInBytes = 1024 * 1024; // 1MB
-    if (file.size > maxSizeInBytes) {
-      toast.error(
-        `File size exceeds the maximum limit of 1MB. Current file size: ${(
-          file.size /
-          (1024 * 1024)
-        ).toFixed(2)}MB`
-      );
+    const validation = validateFileSize(file.size);
+    if (!validation.isValid) {
+      toast.error(validation.errorMessage);
       return;
     }
 

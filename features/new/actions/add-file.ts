@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { findFolder, getFileTypeFromMime } from "@/lib/data";
 import { writeFile } from "fs/promises";
 import { join } from "path";
+import { validateFileSize } from "../utils/validators";
 
 export async function addFile(parentFolderId: string, formData: FormData) {
     try {
@@ -16,12 +17,12 @@ export async function addFile(parentFolderId: string, formData: FormData) {
             };
         }
 
-        // Check file size limit (1MB = 1024 * 1024 bytes)
-        const maxSizeInBytes = 1024 * 1024; // 1MB
-        if (file.size > maxSizeInBytes) {
+        // Check file size limit using shared validation
+        const validation = validateFileSize(file.size);
+        if (!validation.isValid) {
             return {
                 success: false,
-                message: `File size exceeds the maximum limit of 1MB. Current file size: ${(file.size / (1024 * 1024)).toFixed(2)}MB`,
+                message: validation.errorMessage,
             };
         }
 

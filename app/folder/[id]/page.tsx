@@ -13,7 +13,6 @@ export default async function Home({ params }: RootLayoutProps) {
   const folder = findFolder((await params).id);
 
   if (!folder) notFound();
-  console.log("Home folder:", folder);
   return (
     <div className="space-y-4">
       <header className="border-b w-full flex-1 flex flex-wrap justify-between items-center p-4  gap-4">
