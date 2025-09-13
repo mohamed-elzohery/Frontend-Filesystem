@@ -2,6 +2,7 @@ export type FileNode = {
   id: string;
   name: string;
   type: "file";
+  fileType?: string;
 };
 
 export type FolderNode = {
@@ -53,6 +54,35 @@ export function findFolder(
   for (const child of current.children) {
     if (child.type === "folder") {
       const result = findFolder(id, child);
+      if (result) return result;
+    }
+  }
+  return null;
+}
+
+export function getFileTypeFromMime(mimeType: string): string {
+  if (!mimeType) return 'unknown';
+
+  if (mimeType.startsWith('image/')) return 'image';
+  if (mimeType.startsWith('video/')) return 'video';
+  if (mimeType.startsWith('audio/')) return 'audio';
+  if (mimeType.startsWith('text/')) return 'document';
+  if (mimeType === 'application/pdf') return 'document';
+  if (mimeType.includes('document') || mimeType.includes('word') || mimeType.includes('sheet')) return 'document';
+
+  return 'unknown';
+}
+
+export function findFile(
+  id: string,
+  current: FolderNode = root
+): FileNode | null {
+  for (const child of current.children) {
+    if (child.type === "file" && child.id === id) {
+      return child;
+    }
+    if (child.type === "folder") {
+      const result = findFile(id, child);
       if (result) return result;
     }
   }

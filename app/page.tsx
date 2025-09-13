@@ -1,5 +1,5 @@
 import { findFolder } from "@/lib/data";
-import { FolderList } from "@/components/FolderList";
+import FolderList from "@/features/list/components/FolderList";
 import NewButton from "../features/new/components/NewButton";
 import { notFound } from "next/navigation";
 import TopBar from "@/features/navigation/components/TopBar";

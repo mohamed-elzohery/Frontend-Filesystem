@@ -1,5 +1,5 @@
 import { findFolder } from "@/lib/data";
-import { FolderList } from "@/components/FolderList";
+import FolderList from "@/features/list/components/FolderList";
 import { notFound } from "next/navigation";
 import TopBar from "@/features/navigation/components/TopBar";
 import { PropsWithChildren } from "react";
