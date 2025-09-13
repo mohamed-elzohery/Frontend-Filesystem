@@ -61,7 +61,7 @@ export default function AddFolderForm({ onSuccess }: AddFolderFormProps) {
           required
         />
       </div>
-      <DialogFooter>
+      <DialogFooter className="gap-3">
         <DialogClose asChild>
           <Button variant="outline">Cancel</Button>
         </DialogClose>
