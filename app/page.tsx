@@ -3,14 +3,9 @@ import FolderList from "@/features/list/components/FolderList";
 import NewButton from "../features/new/components/NewButton";
 import { notFound } from "next/navigation";
 import TopBar from "@/features/navigation/components/TopBar";
-import { PropsWithChildren } from "react";
 
-type RootLayoutProps = {
-  params: Promise<{ id: string }>;
-} & PropsWithChildren;
-
-export default async function Home({ params }: RootLayoutProps) {
-  const folder = findFolder((await params).id || "root");
+export default async function Home() {
+  const folder = findFolder("root");
 
   if (!folder) notFound();
   return (

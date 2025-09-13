@@ -1,4 +1,4 @@
-import type { PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 import "./globals.css";
 import { Toaster } from "sonner";
 import AppSidebar from "@/features/navigation/components/AppSidebar";
@@ -9,14 +9,9 @@ export const metadata = {
   title: "File Explorer",
 };
 
-type RootLayoutProps = {
-  params: Promise<{ id: string }>;
-} & PropsWithChildren;
+type RootLayoutProps = PropsWithChildren;
 
-export default async function RootLayout({
-  children,
-  params,
-}: RootLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className="h-full flex">

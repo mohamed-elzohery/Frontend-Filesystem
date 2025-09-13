@@ -13,6 +13,9 @@ export type FolderNode = {
   parentId?: string;
 };
 
+// Re-export getFileTypeFromMime from utils for convenience
+export { getFileTypeFromMime } from "./utils";
+
 declare global {
   var __DATA_STORE__: FolderNode | undefined;
 }
@@ -26,6 +29,9 @@ const initialData: FolderNode = {
     { id: "folder-2", name: "Folder 2", type: "folder", children: [], parentId: "root" },
   ],
 };
+
+// We're mimicing a persistent data store using a global variable.
+// In a real application, this would be replaced with a database or other persistent storage.
 
 if (typeof global !== 'undefined' && !global.__DATA_STORE__) {
   global.__DATA_STORE__ = structuredClone(initialData);
@@ -58,59 +64,6 @@ export function findFolder(
     }
   }
   return null;
-}
-
-export function getFileTypeFromMime(mimeType: string): string {
-  if (!mimeType) return 'unknown';
-
-  if (mimeType.startsWith('image/')) return 'image';
-  if (mimeType.startsWith('video/')) return 'video';
-  if (mimeType.startsWith('audio/')) return 'audio';
-  if (mimeType === 'application/pdf') return 'pdf';
-  if (mimeType.startsWith('text/')) return 'document';
-  if (mimeType.includes('document') || mimeType.includes('word') || mimeType.includes('sheet')) return 'document';
-
-  return 'unknown';
-}
-
-export function getFileTypeFromName(fileName: string): string {
-  const extension = fileName.toLowerCase().split('.').pop();
-
-  switch (extension) {
-    case 'pdf':
-      return 'pdf';
-    case 'jpg':
-    case 'jpeg':
-    case 'png':
-    case 'gif':
-    case 'webp':
-    case 'svg':
-      return 'image';
-    case 'mp4':
-    case 'avi':
-    case 'mov':
-    case 'wmv':
-    case 'webm':
-    case 'mkv':
-    case 'flv':
-      return 'video';
-    case 'mp3':
-    case 'wav':
-    case 'flac':
-    case 'aac':
-    case 'm4a':
-    case 'ogg':
-    case 'wma':
-      return 'audio';
-    case 'txt':
-    case 'doc':
-    case 'docx':
-    case 'xls':
-    case 'xlsx':
-      return 'document';
-    default:
-      return 'unknown';
-  }
 }
 
 

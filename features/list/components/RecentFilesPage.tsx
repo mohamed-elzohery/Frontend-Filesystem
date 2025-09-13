@@ -5,7 +5,7 @@ import { FileNode } from "@/lib/data";
 import FolderList from "@/features/list/components/FolderList";
 import NewButton from "@/features/new/components/NewButton";
 
-export default function RecentPage() {
+export default function RecentFilesPage() {
   const [recentFiles, setRecentFiles] = useState<FileNode[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

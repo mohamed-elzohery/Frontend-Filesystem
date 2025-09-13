@@ -1,10 +1,12 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { findFolder, getFileTypeFromMime } from "@/lib/data";
 import { writeFile } from "fs/promises";
 import { join } from "path";
 import { validateFileSize } from "../utils/validators";
+import { putRecent } from "@/features/list/actions/put-recent";
 
 export async function addFile(parentFolderId: string, formData: FormData) {
     try {
@@ -54,15 +56,15 @@ export async function addFile(parentFolderId: string, formData: FormData) {
 
         parent.children.push(newFile);
 
+        // Add to recent files cache
+        await putRecent(newFile);
+
         // Revalidate the relevant paths to refresh the cache
         revalidatePath("/");
         revalidatePath(`/folder/${parentFolderId}`);
 
-        return {
-            success: true,
-            message: `File "${file.name}" uploaded successfully`,
-            file: newFile,
-        };
+        // Navigate to the parent folder
+        redirect(`/folder/${parentFolderId}`);
     } catch (error) {
         console.error("Error in addFile:", error);
         return {

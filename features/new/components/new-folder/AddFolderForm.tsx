@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
@@ -16,6 +16,7 @@ export default function AddFolderForm({ onSuccess }: AddFolderFormProps) {
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
+  const router = useRouter();
 
   // Get current folder ID from URL params, default to 'root' if not in a folder page
   const parentFolderId = (params?.id as string) || "root";
@@ -34,6 +35,8 @@ export default function AddFolderForm({ onSuccess }: AddFolderFormProps) {
       if (result.success) {
         toast.success(result.message);
         onSuccess?.(); // Close the dialog
+        // Navigate to the parent folder to show the newly created folder
+        router.push(`/folder/${parentFolderId}`);
         return;
       }
     } catch (error) {

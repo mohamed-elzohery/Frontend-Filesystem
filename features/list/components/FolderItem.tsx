@@ -14,10 +14,8 @@ const FolderItem = ({ folder }: FolderItemProps) => {
         href={`/folder/${folder.id}`}
         className="flex items-center justify-between p-4 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 shadow-sm hover:shadow-md"
       >
-        <div className="flex items-center space-x-3">
-          <div className="flex-shrink-0">
-            <Folder className="h-5 w-5 text-blue-500" />
-          </div>
+        <div className="flex items-center gap-3">
+          <Folder className="h-5 w-5 text-blue-500" />
           <span className="text-sm font-medium text-gray-900 truncate">
             {folder.name}
           </span>

@@ -2,14 +2,13 @@ import { findFolder } from "@/lib/data";
 import FolderList from "@/features/list/components/FolderList";
 import { notFound } from "next/navigation";
 import TopBar from "@/features/navigation/components/TopBar";
-import { PropsWithChildren } from "react";
 import NewButton from "@/features/new/components/NewButton";
 
-type RootLayoutProps = {
+type FolderPageProps = {
   params: Promise<{ id: string }>;
-} & PropsWithChildren;
+};
 
-export default async function Home({ params }: RootLayoutProps) {
+export default async function FolderPage({ params }: FolderPageProps) {
   const folder = findFolder((await params).id);
 
   if (!folder) notFound();

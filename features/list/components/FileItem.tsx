@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import type { FileNode } from "@/lib/data";
 import {
@@ -22,12 +23,23 @@ import {
 import Viewer from "./viewers/Viewer";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { cn } from "@/lib/utils";
+import { putRecent } from "@/features/list/actions/put-recent";
+import { Button } from "@/components/ui/button";
 
 interface FileItemProps {
   file: FileNode;
 }
 
 const FileItem = ({ file }: FileItemProps) => {
+  const handleFileOpen = async () => {
+    // Add file to recent cache when opened
+    try {
+      await putRecent(file);
+    } catch (error) {
+      console.error("Error adding file to recent:", error);
+    }
+  };
+
   const getFileIcon = (fileType?: string, fileName?: string) => {
     // Check file type both from stored fileType and from filename
     const actualFileType = fileType;
@@ -52,17 +64,17 @@ const FileItem = ({ file }: FileItemProps) => {
     <Dialog>
       <DialogTrigger asChild>
         <li className="group cursor-pointer">
-          <div className="flex items-center justify-between p-4 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 shadow-sm hover:shadow-md">
-            <div className="flex items-center space-x-3 min-w-0 flex-1">
-              <div className="flex-shrink-0">
-                {getFileIcon(file.fileType, file.name)}
-              </div>
-              <span className="text-sm font-medium text-gray-900 truncate">
-                {file.name}
-              </span>
-            </div>
+          <Button
+            onClick={handleFileOpen}
+            variant={"ghost"}
+            className="flex w-full items-center justify-start p-4 py-6 rounded-lg border border-gray-200 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 shadow-sm hover:shadow-md"
+          >
+            {getFileIcon(file.fileType, file.name)}
+            <span className="text-sm font-medium text-gray-900 truncate">
+              {file.name}
+            </span>
             <ExternalLink className="h-4 w-4 text-gray-400 group-hover:text-gray-600 transition-colors flex-shrink-0" />
-          </div>
+          </Button>
         </li>
       </DialogTrigger>
       <DialogPortal>
