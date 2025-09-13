@@ -34,7 +34,7 @@ const AddFileButton = () => {
       const result = await addFile(parentFolderId, formData);
 
       if (result && result.success) {
-        toast.success(result.message);
+        return toast.success(result.message);
       } else if (result && !result.success) {
         toast.error(result.message);
       } else {

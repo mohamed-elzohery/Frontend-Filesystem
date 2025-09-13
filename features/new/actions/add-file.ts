@@ -62,9 +62,12 @@ export async function addFile(parentFolderId: string, formData: FormData) {
         // Revalidate the relevant paths to refresh the cache
         revalidatePath("/");
         revalidatePath(`/folder/${parentFolderId}`);
+        revalidatePath("/recent");
 
-        // Navigate to the parent folder
-        redirect(`/folder/${parentFolderId}`);
+        return {
+            success: true,
+            message: "File uploaded successfully",
+        };
     } catch (error) {
         console.error("Error in addFile:", error);
         return {

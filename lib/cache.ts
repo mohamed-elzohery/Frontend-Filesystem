@@ -71,23 +71,24 @@ export class LRUCache {
 
     // Add or update a file in the cache
     put(key: string, value: FileNode): void {
-        const node = this.cache.get(key);
+        const existingNode = this.cache.get(key);
 
-        if (node) {
-            // Update the value and move to head
-            node.value = value;
-            this.moveToHead(node);
+        if (existingNode) {
+            // Element already exists - update value and move to head (most recent)
+            existingNode.value = value;
+            this.moveToHead(existingNode);
         } else {
-            const newNode = new CacheNode(key, value);
-
+            // New element - check capacity first
             if (this.cache.size >= this.capacity) {
-                // Remove least recently used item
-                const tail = this.popTail();
-                if (tail) {
-                    this.cache.delete(tail.key);
+                // Remove least recently used item (from tail)
+                const lruNode = this.popTail();
+                if (lruNode) {
+                    this.cache.delete(lruNode.key);
                 }
             }
 
+            // Create new node and add to head (most recent)
+            const newNode = new CacheNode(key, value);
             this.cache.set(key, newNode);
             this.addNode(newNode);
         }
@@ -106,12 +107,12 @@ export class LRUCache {
         return result;
     }
 
-    // Get a specific file (moves it to head if found)
+    // Get a specific file (moves it to head if found - marks as most recently used)
     get(key: string): FileNode | null {
         const node = this.cache.get(key);
 
         if (node) {
-            // Move to head (mark as recently used)
+            // Move to head (mark as most recently used)
             this.moveToHead(node);
             return node.value;
         }
