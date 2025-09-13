@@ -3,10 +3,21 @@ import FolderList from "@/features/list/components/FolderList";
 import { notFound } from "next/navigation";
 import TopBar from "@/features/navigation/components/TopBar";
 import NewButton from "@/features/new/components/NewButton";
+import { Metadata } from "next";
 
 type FolderPageProps = {
   params: Promise<{ id: string }>;
 };
+
+export async function generateMetadata({
+  params,
+}: FolderPageProps): Promise<Metadata> {
+  // read route params
+  const folder = findFolder((await params).id);
+  return {
+    title: folder?.name,
+  };
+}
 
 export default async function FolderPage({ params }: FolderPageProps) {
   const folder = findFolder((await params).id);

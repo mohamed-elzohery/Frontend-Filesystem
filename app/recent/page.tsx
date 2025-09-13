@@ -3,6 +3,11 @@ import { FileNode } from "@/lib/data";
 import RecentFiles from "@/features/list/components/RecentFiles";
 import NewButton from "@/features/new/components/NewButton";
 
+export const metadata = {
+  title: "Recent Files",
+  description: "View your recently accessed or modified files",
+};
+
 export default async function RecentPage() {
   // Fetch recent files directly on the server
   let recentFiles: FileNode[] = [];

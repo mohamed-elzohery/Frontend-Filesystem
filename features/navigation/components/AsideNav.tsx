@@ -23,7 +23,7 @@ const AsideNav = ({ className }: AsideNavProps) => {
   const navItems: NavItem[] = [
     {
       href: "/",
-      label: "My Files",
+      label: "Home",
       icon: FolderOpen,
     },
     {

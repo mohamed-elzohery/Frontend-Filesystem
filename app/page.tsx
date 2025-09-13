@@ -4,6 +4,11 @@ import NewButton from "../features/new/components/NewButton";
 import { notFound } from "next/navigation";
 import TopBar from "@/features/navigation/components/TopBar";
 
+export const metadata = {
+  title: "Home",
+  description: "View your recently accessed or modified files",
+};
+
 export default async function Home() {
   const folder = findFolder("root");
 
