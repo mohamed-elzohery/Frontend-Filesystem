@@ -9,16 +9,22 @@ import {
 } from "@/components/ui/dialog";
 import ImageViewer from "./viewers/ImageViewer";
 import Viewer from "./viewers/Viewer";
+import { getFileTypeFromName } from "@/lib/data";
 
 interface FileItemProps {
   file: FileNode;
 }
 
 const FileItem = ({ file }: FileItemProps) => {
-  const getFileIcon = (fileType?: string) => {
-    switch (fileType) {
+  const getFileIcon = (fileType?: string, fileName?: string) => {
+    // Check file type both from stored fileType and from filename
+    const actualFileType = fileType || getFileTypeFromName(fileName || "");
+
+    switch (actualFileType) {
       case "image":
         return "🖼️";
+      case "pdf":
+        return "📄";
       case "document":
         return "📄";
       case "video":
@@ -38,7 +44,9 @@ const FileItem = ({ file }: FileItemProps) => {
           className="block border p-2 rounded bg-white cursor-pointer hover:bg-gray-50 transition-colors"
         >
           <div className="flex items-center space-x-2">
-            <span className="text-sm">{getFileIcon(file.fileType)}</span>
+            <span className="text-sm">
+              {getFileIcon(file.fileType, file.name)}
+            </span>
             <span>{file.name}</span>
           </div>
         </li>

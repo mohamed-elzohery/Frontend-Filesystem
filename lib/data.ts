@@ -66,11 +66,44 @@ export function getFileTypeFromMime(mimeType: string): string {
   if (mimeType.startsWith('image/')) return 'image';
   if (mimeType.startsWith('video/')) return 'video';
   if (mimeType.startsWith('audio/')) return 'audio';
+  if (mimeType === 'application/pdf') return 'pdf';
   if (mimeType.startsWith('text/')) return 'document';
-  if (mimeType === 'application/pdf') return 'document';
   if (mimeType.includes('document') || mimeType.includes('word') || mimeType.includes('sheet')) return 'document';
 
   return 'unknown';
+}
+
+export function getFileTypeFromName(fileName: string): string {
+  const extension = fileName.toLowerCase().split('.').pop();
+
+  switch (extension) {
+    case 'pdf':
+      return 'pdf';
+    case 'jpg':
+    case 'jpeg':
+    case 'png':
+    case 'gif':
+    case 'webp':
+    case 'svg':
+      return 'image';
+    case 'mp4':
+    case 'avi':
+    case 'mov':
+    case 'wmv':
+      return 'video';
+    case 'mp3':
+    case 'wav':
+    case 'flac':
+      return 'audio';
+    case 'txt':
+    case 'doc':
+    case 'docx':
+    case 'xls':
+    case 'xlsx':
+      return 'document';
+    default:
+      return 'unknown';
+  }
 }
 
 export function findFile(

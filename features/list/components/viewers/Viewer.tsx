@@ -7,7 +7,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import ImageViewer from "./ImageViewer";
+import PDFViewer from "./PDFViewer";
 import PreviewFallback from "./PreviewFallback";
+import { getFileTypeFromName } from "@/lib/data";
 
 interface ViewerProps {
   file: FileNode | null;
@@ -17,9 +19,14 @@ const Viewer = ({ file }: ViewerProps) => {
   if (!file) return null;
 
   const renderFileViewer = () => {
-    switch (file.fileType) {
+    // Check file type both from stored fileType and from filename
+    const fileType = file.fileType || getFileTypeFromName(file.name);
+
+    switch (fileType) {
       case "image":
         return <ImageViewer file={file} />;
+      case "pdf":
+        return <PDFViewer file={file} />;
       default:
         return <PreviewFallback file={file} />;
     }

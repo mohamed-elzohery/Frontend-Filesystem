@@ -11,12 +11,22 @@ import { Button } from "@/components/ui/button";
 const AddFileButton = () => {
   const params = useParams();
 
-  // Get current folder ID from URL params, default to 'root' if not in a folder page
   const parentFolderId = (params?.id as string) || "root";
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    const maxSizeInBytes = 1024 * 1024; // 1MB
+    if (file.size > maxSizeInBytes) {
+      toast.error(
+        `File size exceeds the maximum limit of 1MB. Current file size: ${(
+          file.size /
+          (1024 * 1024)
+        ).toFixed(2)}MB`
+      );
+      return;
+    }
 
     // Show uploading toast
     toast.info("File is uploading...");
@@ -27,16 +37,16 @@ const AddFileButton = () => {
 
       const result = await addFile(parentFolderId, formData);
 
-      if (result.success) {
+      if (result && result.success) {
         toast.success(result.message);
+      } else if (result && !result.success) {
+        toast.error(result.message);
+      } else {
+        toast.error("Invalid response from server");
       }
     } catch (error) {
       console.error("Error uploading file:", error);
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : "An unexpected error occurred while uploading the file";
-      toast.error(errorMessage);
+      toast.error("An unexpected error occurred while uploading the file");
     }
   };
 
