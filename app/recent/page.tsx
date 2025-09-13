@@ -2,6 +2,8 @@ import { getRecentCache } from "@/lib/cache";
 import { FileNode } from "@/lib/data";
 import RecentFiles from "@/features/list/components/RecentFiles";
 import NewButton from "@/features/new/components/NewButton";
+import TopBar from "@/features/navigation/components/TopBar";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 export const metadata = {
   title: "Recent Files",
@@ -23,12 +25,11 @@ export default async function RecentPage() {
 
   return (
     <div className="space-y-4">
-      <header className="border-b w-full flex-1 flex flex-wrap justify-between items-center p-4 gap-4">
-        <div className="flex items-center space-x-2 text-gray-800">
-          <h1 className="text-xl font-semibold leading-none tracking-tight">
-            Recent Files
-          </h1>
-        </div>
+      <header className="border-b flex flex-wrap justify-between items-center p-4  gap-4">
+        <nav className=" flex items-center gap-4">
+          <SidebarTrigger className="md:hidden flex" />
+          <h1 className="text-lg font-semibold">Recent Files</h1>
+        </nav>
         <NewButton />
       </header>
       <main className="flex-1 p-4">
