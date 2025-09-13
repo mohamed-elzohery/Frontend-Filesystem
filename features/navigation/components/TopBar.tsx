@@ -1,12 +1,17 @@
 import React from "react";
 import BackButton from "./BackButton";
-import BreadcrumbNavigation from "./breadcrumb";
+import { FolderNode } from "@/lib/data";
 
-const TopBar = () => {
+type TopBarProps = {
+  folder?: FolderNode | null;
+};
+
+const TopBar = ({ folder }: TopBarProps) => {
+  console.log("TopBar folder:", folder);
   return (
     <nav className=" flex items-center gap-4">
-      <BackButton />
-      <BreadcrumbNavigation />
+      <BackButton parentId={folder?.parentId} />
+      <h1 className="text-lg font-semibold">{folder?.name || "Home"}</h1>
     </nav>
   );
 };

@@ -36,9 +36,6 @@ export async function addFile(parentFolderId: string, formData: FormData) {
     };
 
     parent.children.push(newFile);
-    console.log(
-        `Uploaded file "${newFile.name}" with ID "${newFile.id}" to parent "${parent.name}"`
-    );
 
     // Revalidate the relevant paths to refresh the cache
     revalidatePath("/");

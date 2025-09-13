@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { addFile } from "../../actions/add-file";
+import { Button } from "@/components/ui/button";
 
 const AddFileButton = () => {
   const params = useParams();
@@ -40,7 +41,7 @@ const AddFileButton = () => {
   };
 
   return (
-    <>
+    <Button variant={"ghost"} className="w-full p-0 justify-start">
       <label
         htmlFor="file-upload"
         className="flex items-center gap-3 w-full text-left px-2 py-1.5 hover:bg-accent rounded-sm cursor-pointer"
@@ -55,7 +56,7 @@ const AddFileButton = () => {
         style={{ display: "none" }}
         id="file-upload"
       />
-    </>
+    </Button>
   );
 };
 

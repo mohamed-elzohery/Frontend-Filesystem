@@ -22,9 +22,7 @@ export async function addFolder(parentFolderId: string, name: string) {
   };
 
   parent.children.push(newFolder);
-  console.log(
-    `Created folder "${newFolder.name}" with ID "${newFolder.id}" in parent "${parent.name}"`
-  );
+
 
   // Revalidate the relevant paths to refresh the cache
   revalidatePath("/");

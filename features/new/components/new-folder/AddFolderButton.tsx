@@ -10,15 +10,21 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import AddFolderForm from "./AddFolderForm";
+import { Button } from "@/components/ui/button";
 
 const AddFolderButton = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="flex items-center gap-3 w-full text-left px-2 py-1.5 hover:bg-accent rounded-sm">
-        <Folder size={22} />
-        New Folder
+      <DialogTrigger
+        className="flex items-center gap-3 w-full text-left px-2 py-1.5 hover:bg-accent rounded-sm"
+        asChild
+      >
+        <Button variant={"ghost"} className="w-full justify-start">
+          <Folder size={22} />
+          New Folder
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

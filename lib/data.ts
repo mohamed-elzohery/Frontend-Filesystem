@@ -26,21 +26,20 @@ const initialData: FolderNode = {
   ],
 };
 
-// Initialize the global store
 if (typeof global !== 'undefined' && !global.__DATA_STORE__) {
   global.__DATA_STORE__ = structuredClone(initialData);
 }
 
-// Function to get the current data store
 export function getDataStore(): FolderNode {
   if (typeof global !== 'undefined' && global.__DATA_STORE__) {
     return global.__DATA_STORE__;
   }
-  // Fallback for cases where global is not available
+
   if (typeof global !== 'undefined') {
     global.__DATA_STORE__ = structuredClone(initialData);
     return global.__DATA_STORE__;
   }
+
   return structuredClone(initialData);
 }
 

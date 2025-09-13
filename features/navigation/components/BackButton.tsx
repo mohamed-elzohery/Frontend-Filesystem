@@ -1,18 +1,27 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { findFolder } from "@/lib/data";
+import { FolderNode } from "@/lib/data";
+import { ArrowBigLeft, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const BackButton = () => {
-  const params = useParams();
-  console.log("Params in BackButton:", params);
-  if (!params.id) return null;
-  const folder = findFolder(params.id as string);
-  console.log("Current folder in BackButton:", folder);
-  if (!folder || !folder.parentId) return null;
-  return <Link href={`/folder/${folder.parentId}`}>Back</Link>;
+type BackButtonProps = {
+  parentId?: string;
+};
+
+const BackButton = ({ parentId }: BackButtonProps) => {
+  console.log("parentId:", parentId);
+  if (!parentId) return null;
+  return (
+    <Link
+      className="flex gap-2"
+      href={parentId === "root" ? "/" : `/folder/${parentId}`}
+    >
+      <ArrowLeft />
+      Back
+    </Link>
+  );
 };
 
 export default BackButton;
