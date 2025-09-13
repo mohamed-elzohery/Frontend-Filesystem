@@ -1,37 +1,20 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import { getRecentCache } from "@/lib/cache";
 import { FileNode } from "@/lib/data";
-import FolderList from "@/features/list/components/FolderList";
+import RecentFiles from "@/features/list/components/RecentFiles";
 import NewButton from "@/features/new/components/NewButton";
 
-export default function RecentPage() {
-  const [recentFiles, setRecentFiles] = useState<FileNode[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default async function RecentPage() {
+  // Fetch recent files directly on the server
+  let recentFiles: FileNode[] = [];
+  let error: string | null = null;
 
-  useEffect(() => {
-    const fetchRecentFiles = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch("/api/recent");
-        const data = await response.json();
-
-        if (data.success) {
-          setRecentFiles(data.files);
-        } else {
-          setError(data.message || "Failed to load recent files");
-        }
-      } catch (err) {
-        console.error("Error fetching recent files:", err);
-        setError("Failed to load recent files");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecentFiles();
-  }, []);
+  try {
+    const cache = getRecentCache();
+    recentFiles = cache.getAll();
+  } catch (err) {
+    console.error("Error fetching recent files:", err);
+    error = "Failed to load recent files";
+  }
 
   return (
     <div className="space-y-4">
@@ -44,20 +27,12 @@ export default function RecentPage() {
         <NewButton />
       </header>
       <main className="flex-1 p-4">
-        {loading ? (
-          <div className="flex items-center justify-center py-8">
-            <p className="text-gray-500">Loading recent files...</p>
-          </div>
-        ) : error ? (
+        {error ? (
           <div className="flex items-center justify-center py-8">
             <p className="text-red-500">{error}</p>
           </div>
-        ) : recentFiles.length === 0 ? (
-          <div className="flex items-center justify-center py-8">
-            <p className="text-gray-500">No recent files found</p>
-          </div>
         ) : (
-          <FolderList nodes={recentFiles} />
+          <RecentFiles files={recentFiles} />
         )}
       </main>
     </div>
