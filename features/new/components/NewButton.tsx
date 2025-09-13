@@ -9,6 +9,7 @@ import {
 import AddFolderButton from "./new-folder/AddFolderButton";
 import AddFileButton from "./new-file/AddFileButton";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const NewButton = () => {
   return (
@@ -29,6 +30,10 @@ const NewButton = () => {
       </DropdownMenuContent>
     </DropdownMenu>
   );
+};
+
+export const NewButtonSkeleton = () => {
+  return <Skeleton className="h-10 w-20" />;
 };
 
 export default NewButton;

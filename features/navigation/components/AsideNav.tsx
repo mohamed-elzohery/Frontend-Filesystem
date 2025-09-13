@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
 import { FolderOpen, Clock } from "lucide-react";
+import { useSidebar } from "@/components/ui/sidebar";
 
 type AsideNavProps = {
   className?: string;
@@ -17,6 +18,7 @@ type NavItem = {
 
 const AsideNav = ({ className }: AsideNavProps) => {
   const pathname = usePathname();
+  const { setOpenMobile } = useSidebar();
 
   const navItems: NavItem[] = [
     {
@@ -44,6 +46,7 @@ const AsideNav = ({ className }: AsideNavProps) => {
             return (
               <li key={item.href}>
                 <Link
+                  onClick={() => setOpenMobile(false)}
                   href={item.href}
                   className={`flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors duration-200 group ${
                     isActive
