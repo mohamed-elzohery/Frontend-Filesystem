@@ -19,9 +19,7 @@ import {
   ExternalLink,
   X,
 } from "lucide-react";
-import ImageViewer from "./viewers/ImageViewer";
 import Viewer from "./viewers/Viewer";
-import { getFileTypeFromName } from "@/lib/data";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +30,7 @@ interface FileItemProps {
 const FileItem = ({ file }: FileItemProps) => {
   const getFileIcon = (fileType?: string, fileName?: string) => {
     // Check file type both from stored fileType and from filename
-    const actualFileType = fileType || getFileTypeFromName(fileName || "");
+    const actualFileType = fileType;
 
     switch (actualFileType) {
       case "image":

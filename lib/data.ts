@@ -113,18 +113,4 @@ export function getFileTypeFromName(fileName: string): string {
   }
 }
 
-export function findFile(
-  id: string,
-  current: FolderNode = root
-): FileNode | null {
-  for (const child of current.children) {
-    if (child.type === "file" && child.id === id) {
-      return child;
-    }
-    if (child.type === "folder") {
-      const result = findFile(id, child);
-      if (result) return result;
-    }
-  }
-  return null;
-}
+
